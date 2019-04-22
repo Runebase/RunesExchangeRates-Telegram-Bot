@@ -2,9 +2,7 @@
 
 const config = require('./config.js');
 const TelegramBot = require('node-telegram-bot-api');
-const _ = require('lodash');
 const request = require('request');
-const uuidV4 = require('uuid/v4');
 const bot = new TelegramBot(config.token, { polling: true });
 
 const wadaxBtc = "https://wadax.io/v2/tickers/RUNESBTC";
