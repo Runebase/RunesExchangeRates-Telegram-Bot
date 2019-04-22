@@ -1,0 +1,32 @@
+{
+  "name": "cryptorates-telegram-bot",
+  "version": "0.0.1",
+  "description": "A Telegram bot for getting runes exchange rates.",
+  "author": "Jonas Collier <jonas.kris.collier@gmail.com>",
+  "homepage": "https://github.com/runebase/RunesExchangeRates-Telegram-Bot",
+  "bugs": {
+    "url": "https://github.com/runebase/RunesExchangeRates-Telegram-Bot/issues"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "cryptocurrencies",
+    "rates",
+    "runes",
+    "runebase"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/runebase/RunesExchangeRates-Telegram-Bot.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "node-telegram-bot-api": "^0.27.1",
+    "request": "^2.81.0",
+    "uuid": "^3.0.1"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
