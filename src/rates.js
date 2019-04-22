@@ -4,6 +4,8 @@ const config = require('./config.js');
 const TelegramBot = require('node-telegram-bot-api');
 const request = require('request');
 const bot = new TelegramBot(config.token, { polling: true });
+const wadaxRates = require('./models/wadaxRates');
+const altMarketRates = require('./models/altMarketRates');
 
 const wadaxBtc = "https://wadax.io/v2/tickers/RUNESBTC";
 const altMarketsBtc = "https://altmarkets.io/api/v2/tickers/runesbtc";
@@ -45,46 +47,32 @@ bot.onText(/\/help.*/, function (msg) {
 bot.onText(/\/rates.*/, function (msg) {
     // Wadax BTC rates
     getExchangeRates(wadaxBtc).then(function (data) {
-	let wadaxrates = JSON.parse(data);
-        const content = `Wadax.io RUNES/BTC Exchange Rates
-Buy price: ${parseFloat(wadaxrates.buy).toFixed(8)}
-Sell price: ${parseFloat(wadaxrates.sell).toFixed(8)}
-Last price: ${parseFloat(wadaxrates.last).toFixed(8)}
-24h low: ${wadaxrates.low}
-24h high: ${wadaxrates.high}
-24h change: ${wadaxrates.change} %
-24h baseVolume: ${wadaxrates.baseVolume}
-`;
-	bot.sendMessage(msg.chat.id, content);
+        try {
+            const message = new wadaxRates(data).translate();
+            bot.sendMessage(msg.chat.id, message.content);            
+          } catch (err) {
+            console.log(`ERROR: ${err.message}`);
+          }	
     });
-
     // altmarkets BTC rates
     getExchangeRates(altMarketsBtc).then(function (data) {
-	let altBtcRates = JSON.parse(data);
-	console.log(altBtcRates);
-        const content = `AltMarkets.io RUNES/BTC Exchange Rates
-Buy price: ${parseFloat(altBtcRates.ticker.buy).toFixed(8)}
-Sell price: ${parseFloat(altBtcRates.ticker.sell).toFixed(8)}
-Last price: ${parseFloat(altBtcRates.ticker.last).toFixed(8)}
-24h low: ${altBtcRates.ticker.low}
-24h high: ${altBtcRates.ticker.high}
-24h baseVolume: ${altBtcRates.ticker.vol}
-`;
-	bot.sendMessage(msg.chat.id, content);
+        try {
+            const market = "BTC"
+            const message = new altMarketRates(data, market).translate();
+            bot.sendMessage(msg.chat.id, message.content);            
+          } catch (err) {
+            console.log(`ERROR: ${err.message}`);
+          } 
     });
     // altmarkets DOGE rates
     getExchangeRates(altMarketsDoge).then(function (data) {
-	let altDogeRates = JSON.parse(data);
-	console.log(altDogeRates);
-        const content = `AltMarkets.io RUNES/DOGE Exchange Rates
-Buy price: ${parseFloat(altDogeRates.ticker.buy).toFixed(8)}
-Sell price: ${parseFloat(altDogeRates.ticker.sell).toFixed(8)}
-Last price: ${parseFloat(altDogeRates.ticker.last).toFixed(8)}
-24h low: ${altDogeRates.ticker.low}
-24h high: ${altDogeRates.ticker.high}
-24h baseVolume: ${altDogeRates.ticker.vol}
-`;
-	bot.sendMessage(msg.chat.id, content);
+        try {
+            const market = "DOGE"
+            const message = new altMarketRates(data, market).translate();
+            bot.sendMessage(msg.chat.id, message.content);            
+          } catch (err) {
+            console.log(`ERROR: ${err.message}`);
+          } 
     });
 });
 
