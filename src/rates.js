@@ -8,14 +8,15 @@ const uuidV4 = require('uuid/v4');
 const bot = new TelegramBot(config.token, { polling: true });
 
 
-const getExchangeRates = function () {
-    const url = `https://`;
+const getWadaxExchangeRates = function () {
+    const url = `https://wadax.io/v2/tickers/RUNESBTC`;
 
     return new Promise(function (resolve, reject) {
         request(url, function (error, response, body) {
             if (error) {
                 reject(error);
             }
+	    console.log(body);
             resolve(body);
         });
     });
@@ -38,18 +39,17 @@ bot.onText(/\/help.*/, function (msg) {
 
 bot.onText(/\/rates.*/, function (msg) {
     bot.sendMessage(msg.chat.id, helpText);
-    getExchangeRates().then(function (data) {
-        data = _.get(JSON.parse(data), 'result', {});
-        let key = _.keys(data);
-        if (key.length !== 1) {
-            bot.answerInlineQuery(inlineId, []);
-            return;
-        }
-        key = key[0];
-        data = data[key];
-
-
-        const content = `Data here`;
+    getWadaxExchangeRates().then(function (data) {
+	const wadaxrates = JSON.parse(data);
+        const content = `Wadax.io RUNES Exchange Rates
+Buy price: ${wadaxrates.buy}
+Sell price: ${wadaxrates.sell}
+Last price: ${wadaxrates.last}
+24h low: ${wadaxrates.low}
+24h high: ${wadaxrates.high}
+24h change: ${wadaxrates.change}
+24h baseVolume: ${wadaxrates.baseVolume}
+`;
 	bot.sendMessage(msg.chat.id, content);
     });
 });
