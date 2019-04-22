@@ -31,8 +31,10 @@ const getExchangeRates = function (url) {
 // COMMANDS ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 const helpText =
-        'This bot is intended to be used in inline mode, just type ' +
-        '@RunesExchangeRates in any chat.';
+        `Runebase Exchange Rates
+usage:
+Get Exchange rates: /rates
+`;
 
 bot.onText(/\/start.*/, function (msg) {
     bot.sendMessage(msg.chat.id, helpText);
