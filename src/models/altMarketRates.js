@@ -17,7 +17,7 @@ Sell price: ${parseFloat(this.data.ticker.sell).toFixed(8)}
 Last price: ${parseFloat(this.data.ticker.last).toFixed(8)}
 24h low: ${this.data.ticker.low}
 24h high: ${this.data.ticker.high}
-24h baseVolume: ${this.data.ticker.vol}
+24h volume: ${this.data.ticker.vol}
 `;
   }
   translate() {

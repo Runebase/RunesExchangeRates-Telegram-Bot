@@ -14,10 +14,10 @@ class wadaxRates {
 Buy price: ${parseFloat(this.data.buy).toFixed(8)}
 Sell price: ${parseFloat(this.data.sell).toFixed(8)}
 Last price: ${parseFloat(this.data.last).toFixed(8)}
-24h low: ${this.data.low}
-24h high: ${this.data.high}
+24h low: ${parseFloat(this.data.low).toFixed(8)}
+24h high: ${parseFloat(this.data.high).toFixed(8)}
 24h change: ${this.data.change} %
-24h baseVolume: ${this.data.baseVolume}
+24h volume: ${this.data.baseVolume}
 `;
   }
   translate() {
