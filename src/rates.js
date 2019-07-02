@@ -50,7 +50,6 @@ bot.onText(/\/rates.*/, function (msg) {
     // Txbit BTC rates
     getExchangeRates(txbitBtc).then(function (data) {
         try {
-        	const market = "BTC"
             const message = new txbitRates(data).translate();
             bot.sendMessage(msg.chat.id, message.content);            
           } catch (err) {
@@ -60,7 +59,6 @@ bot.onText(/\/rates.*/, function (msg) {
     // Txbit ETH rates
     getExchangeRates(txbitEth).then(function (data) {
         try {
-        	const market = "ETH"
             const message = new txbitRates(data).translate();
             bot.sendMessage(msg.chat.id, message.content);            
           } catch (err) {
@@ -70,7 +68,6 @@ bot.onText(/\/rates.*/, function (msg) {
     // Txbit XLR rates
     getExchangeRates(txbitXlr).then(function (data) {
         try {
-        	const market = "XLR"
             const message = new txbitRates(data).translate();
             bot.sendMessage(msg.chat.id, message.content);            
           } catch (err) {
