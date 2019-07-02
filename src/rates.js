@@ -4,10 +4,12 @@ const config = require('./config.js');
 const TelegramBot = require('node-telegram-bot-api');
 const request = require('request');
 const bot = new TelegramBot(config.token, { polling: true });
-const wadaxRates = require('./models/wadaxRates');
+const txbitRates = require('./models/txbitRates');
 const altMarketRates = require('./models/altMarketRates');
 
-const wadaxBtc = "https://wadax.io/v2/tickers/RUNESBTC";
+const txbitBtc = "https://api.txbit.io/api/public/getmarketsummary?market=RUNES/BTC";
+const txbitEth = "https://api.txbit.io/api/public/getmarketsummary?market=RUNES/ETH";
+const txbitXlr = "https://api.txbit.io/api/public/getmarketsummary?market=RUNES/XLR";
 const altMarketsBtc = "https://altmarkets.io/api/v2/tickers/runesbtc";
 const altMarketsDoge = "https://altmarkets.io/api/v2/tickers/runesdoge";
 
@@ -45,10 +47,31 @@ bot.onText(/\/help.*/, function (msg) {
 });
 
 bot.onText(/\/rates.*/, function (msg) {
-    // Wadax BTC rates
-    getExchangeRates(wadaxBtc).then(function (data) {
+    // Txbit BTC rates
+    getExchangeRates(txbitBtc).then(function (data) {
         try {
-            const message = new wadaxRates(data).translate();
+        	const market = "BTC"
+            const message = new txbitRates(data).translate();
+            bot.sendMessage(msg.chat.id, message.content);            
+          } catch (err) {
+            console.log(`ERROR: ${err.message}`);
+          }	
+    });
+    // Txbit ETH rates
+    getExchangeRates(txbitEth).then(function (data) {
+        try {
+        	const market = "ETH"
+            const message = new txbitRates(data).translate();
+            bot.sendMessage(msg.chat.id, message.content);            
+          } catch (err) {
+            console.log(`ERROR: ${err.message}`);
+          }	
+    });
+    // Txbit XLR rates
+    getExchangeRates(txbitXlr).then(function (data) {
+        try {
+        	const market = "XLR"
+            const message = new txbitRates(data).translate();
             bot.sendMessage(msg.chat.id, message.content);            
           } catch (err) {
             console.log(`ERROR: ${err.message}`);
