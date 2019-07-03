@@ -12,12 +12,12 @@ class altMarketRates {
 
   decode() {
 this.content = `AltMarkets.io RUNES/${this.market} Exchange Rates
-Buy price: ${parseFloat(this.data.ticker.buy).toFixed(8)}
-Sell price: ${parseFloat(this.data.ticker.sell).toFixed(8)}
-Last price: ${parseFloat(this.data.ticker.last).toFixed(8)}
-24h low: ${this.data.ticker.low}
-24h high: ${this.data.ticker.high}
-24h volume: ${this.data.ticker.vol}
+Buy price: ${parseFloat(this.data.ticker.buy).toFixed(8)} ${this.market} 
+Sell price: ${parseFloat(this.data.ticker.sell).toFixed(8)} ${this.market} 
+Last price: ${parseFloat(this.data.ticker.last).toFixed(8)} ${this.market} 
+24h low: ${this.data.ticker.low} ${this.market} 
+24h high: ${this.data.ticker.high} ${this.market} 
+24h volume: ${this.data.ticker.vol} RUNES
 `;
   }
   translate() {

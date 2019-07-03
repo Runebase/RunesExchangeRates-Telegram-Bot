@@ -2,22 +2,22 @@
 const _ = require('lodash');
 
 class wadaxRates {
-  constructor(data) {    
+  constructor(data, market) {    
     if (!_.isEmpty(data)) {
       this.data = JSON.parse(data);
+      this.market = market;
       this.decode();
     }
   }
 
   decode() {
-        console.log (this.data);
         this.content = `Txbit.io ${this.data.result.MarketName} Exchange Rates
-Buy price: ${parseFloat(this.data.result.Bid).toFixed(8)}
-Sell price: ${parseFloat(this.data.result.Ask).toFixed(8)}
-Last price: ${parseFloat(this.data.result.Last).toFixed(8)}
-24h low: ${parseFloat(this.data.result.Low).toFixed(8)}
-24h high: ${parseFloat(this.data.result.High).toFixed(8)}
-24h volume: ${parseFloat(this.data.result.BaseVolume).toFixed(8)}
+Buy price: ${parseFloat(this.data.result.Bid).toFixed(8)} ${this.market} 
+Sell price: ${parseFloat(this.data.result.Ask).toFixed(8)} ${this.market} 
+Last price: ${parseFloat(this.data.result.Last).toFixed(8)} ${this.market} 
+24h low: ${parseFloat(this.data.result.Low).toFixed(8)} ${this.market} 
+24h high: ${parseFloat(this.data.result.High).toFixed(8)} ${this.market} 
+24h volume: ${parseFloat(this.data.result.BaseVolume).toFixed(8)} ${this.market} 
 `;
   }
   translate() {

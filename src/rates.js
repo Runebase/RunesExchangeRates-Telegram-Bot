@@ -50,7 +50,8 @@ bot.onText(/\/rates.*/, function (msg) {
     // Txbit BTC rates
     getExchangeRates(txbitBtc).then(function (data) {
         try {
-            const message = new txbitRates(data).translate();
+        	const market = "BTC"
+            const message = new txbitRates(data, market).translate();
             bot.sendMessage(msg.chat.id, message.content);            
           } catch (err) {
             console.log(`ERROR: ${err.message}`);
@@ -59,7 +60,8 @@ bot.onText(/\/rates.*/, function (msg) {
     // Txbit ETH rates
     getExchangeRates(txbitEth).then(function (data) {
         try {
-            const message = new txbitRates(data).translate();
+        	const market = "ETH"
+            const message = new txbitRates(data, market).translate();
             bot.sendMessage(msg.chat.id, message.content);            
           } catch (err) {
             console.log(`ERROR: ${err.message}`);
@@ -68,7 +70,8 @@ bot.onText(/\/rates.*/, function (msg) {
     // Txbit XLR rates
     getExchangeRates(txbitXlr).then(function (data) {
         try {
-            const message = new txbitRates(data).translate();
+        	const market = "XLR"
+            const message = new txbitRates(data, market).translate();
             bot.sendMessage(msg.chat.id, message.content);            
           } catch (err) {
             console.log(`ERROR: ${err.message}`);
