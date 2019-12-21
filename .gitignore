@@ -57,3 +57,9 @@ typings/
 # dotenv environment variables file
 .env
 
+# screen start file
+start.sh
+
+# config file
+
+src/config.js
