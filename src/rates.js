@@ -1,17 +1,22 @@
 'use strict';
 
+const _ = require('lodash');
 const config = require('./config.js');
 const TelegramBot = require('node-telegram-bot-api');
 const request = require('request');
 const bot = new TelegramBot(config.token, { polling: true });
 const txbitRates = require('./models/txbitRates');
 const altMarketRates = require('./models/altMarketRates');
+const fcExchangeRates = require('./models/fcExchangeRates');
 
 const txbitBtc = "https://api.txbit.io/api/public/getmarketsummary?market=RUNES/BTC";
 const txbitEth = "https://api.txbit.io/api/public/getmarketsummary?market=RUNES/ETH";
 const txbitXlr = "https://api.txbit.io/api/public/getmarketsummary?market=RUNES/XLR";
 const altMarketsBtc = "https://altmarkets.io/api/v2/tickers/runesbtc";
 const altMarketsDoge = "https://altmarkets.io/api/v2/tickers/runesdoge";
+const fcExchangeBtc = "https://fanaticoscriptos.exchange/api/v1/markets/BTC/orders/RUNES/summary";
+const fcExchangeDoge = "https://fanaticoscriptos.exchange/api/v1/markets/DOGE/orders/RUNES/summary";
+const fcExchangeSpero = "https://fanaticoscriptos.exchange/api/v1/markets/SPERO/orders/RUNES/summary";
 
 ///////////////////////////////////////////////////////////////////////////////
 // Functions //////////////////////////////////////////////////////////////////
@@ -22,7 +27,7 @@ const getExchangeRates = function (url) {
             if (error) {
                 reject(error);
             }
-	    console.log(body);
+	    //console.log(body);
             resolve(body);
         });
     });
@@ -48,6 +53,57 @@ bot.onText(/\/help.*/, function (msg) {
 
 bot.onText(/\/rates.*/, async function (msg) {
     let message = '';
+
+    // fanaticoscriptos BTC rates
+    await getExchangeRates(fcExchangeBtc).then(function (data) {
+        try {
+            const market = "BTC"
+            const newData = JSON.parse(data);
+            const addMessage = new fcExchangeRates(newData, market).translate();
+            message += addMessage.content;
+          } catch (err) {
+            console.log(err);
+            message += `<a href='https://fanaticoscriptos.exchange/#/markets/BTC/RUNES'>Fanaticoscriptos.exchange | BTC/RUNES</a>
+<code>Failed to fetch
+</code>
+`;
+            console.log(`ERROR: ${err.message}`);
+          }
+    });
+    // fanaticoscriptos DOGE rates
+    await getExchangeRates(fcExchangeDoge).then(function (data) {
+        try {
+            const market = "DOGE"
+            const newData = JSON.parse(data);
+            const addMessage = new fcExchangeRates(newData, market).translate();
+            message += addMessage.content;
+          } catch (err) {
+            console.log(err);
+            message += `<a href='https://fanaticoscriptos.exchange/#/markets/DOGE/RUNES'>Fanaticoscriptos.exchange | DOGE/RUNES</a>
+<code>Failed to fetch
+</code>
+`;
+            console.log(`ERROR: ${err.message}`);
+          }
+    });
+
+    // fanaticoscriptos SPERO rates
+    await getExchangeRates(fcExchangeBtc).then(function (data) {
+        try {
+            const market = "SPERO"
+            const newData = JSON.parse(data);
+            const addMessage = new fcExchangeRates(newData, market).translate();
+            message += addMessage.content;
+          } catch (err) {
+            console.log(err);
+            message += `<a href='https://fanaticoscriptos.exchange/#/markets/SPERO/RUNES'>Fanaticoscriptos.exchange | SPERO/RUNES</a>
+<code>Failed to fetch
+</code>
+`;
+            console.log(`ERROR: ${err.message}`);
+          }
+    });
+
     // Txbit BTC rates
     await getExchangeRates(txbitBtc).then(function (data) {
         try {
